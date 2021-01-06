@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}event.event_title{% endblock %}
+{% block body_block %}
+{% if event.author == user %}
+<form  method="POST">
+  {{form|crispy}}
+  {% csrf_token %}
+  <button type="submit" name="submit" class="btn btn-success btn-sm">Publish</button>
+  </form>
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title_block %}{{event.event_title}}{% endblock %}
+{% block body_block %}
+<div class="row">
+<div class="col-sm-6">
+  <h1>Title:-{{Event.event_title}}</h1>
+  <h4>Posted By:-{{Event.author}}</h4>
+<i>  <h6>publish Date:-{{Event.publish_date}}</h6></i>
+<i>  <h6>Update Date:-{{Event.update_date}}</h6></i>
+<i><h6>Start Date:{{Event.Start_date}}</h6></i>
+<i>  <h6>End Date:-{{Event.End_date}}</h6></i>
+<h6>{{Event.like_event.count}}~Interested || {{Event.event_comment.count}}~Comment</h6>
+</div>
+<div class="col-sm-4">
+  <img src="/media/{{Event.event_image}}" alt="{{Event.event_title}}" width="100%">
+</div>
+<p>{{Event.event_content}}</p>
+
+{% if not liked %}
+<a href="{% url 'event_app:like' pk=Event.pk %}">  <i class="btn btn-info btn-sm"> Interested</i></a>
+{% else %}
+ <a href="{% url 'event_app:unlike' pk=Event.pk %}"><i class="btn btn-warning btn-sm"class>Not Interested</i></a>
+{% endif %}
+
+
+
+
+
+
+</div>
+<div class="row">
+  <div class="col-sm-6">
+    <h4>Comment:-</h4>
+    {% for comment in Event.event_comment.all %}
+    <p>User:-<a href="#">@{{comment.user}}</a><br>{{comment.comment}}<br><i><h6>{{comment.comment_date}}</h6></i></p>
+<hr><hr><br>
+    {% endfor %}
+
+  </div>
+
+  <div class="col-sm-6">
+    <form  method="POST">
+      {{Comment_Form|crispy}}
+      {% csrf_token%}
+      <button type="submit" name="submit">Send</button>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

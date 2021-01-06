@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block body_block %}
+
+
+<head>
+    <style>
+        .center {
+            position: absolute;
+            left: 40%;
+            top: 30%;
+            transform: translate(-50%, -50%);
+            transform:scaleX(2)
+        }
+    </style>
+
+</head>
+
+<div class="center">
+
+    <form class="text-center border border-light p-5" action="success" method="POST">
+        {% csrf_token %}
+
+        <p class="h3 mb-3"><i class="fas fa-hand-holding-usd"></i> Please Enter your name below</p>
+        <p class="mb-3">অসহায় ও দুস্থ মানুষকে সাহায্য করুন</p>
+
+        <input type="name" name="name" id="name" required class="form-control mb-4" placeholder="Name">
+
+        <!-- RAZORPAY INTEGRATION HERE -->
+        <script src="https://checkout.razorpay.com/v1/checkout.js"
+            data-key="rzp_test_DpAaHaFXPmSMVX"
+            data-amount="500000"
+            data-currency="INR"
+            data-order_id="{{payment.id}}"
+            data-buttontext="Pay with Razorpay"
+            data-name="DONATION FINDER COMMUNITY"
+            data-description="টাকার পরিমাণ"
+            data-image="https://image.freepik.com/free-vector/can-with-money-charity-donation_24877-54480.jpg"
+            data-prefill.name="PC"
+            data-prefill.email=""
+            data-theme.color="#F37254">
+          </script>
+    </form>
+
+</div>
+
+
+</div>
+{% endblock %}

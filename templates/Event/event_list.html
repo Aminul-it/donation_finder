@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title_block %}Event_list{% endblock %}
+
+{% block body_block %}
+{% load custom_filters %}
+<!--card-->
+<div class="w3-container">
+        <div class="w3-pale-red w3-xxxlarge w3-container w3-margin-top w3-padding-large ">
+<u><b><h3> WELCOME TO OUR DONATION FINDER COMMUNITY</h3></b></u>
+            <hr class="w3-border-grey">
+            <div class="w3-large">Discover Great Events or Create Your Own & Doners </div>
+        </div>
+    </div>
+
+<!--card end-->
+
+<br>
+<i><h2  style="color:blue;">Event List </h2></i>
+<hr class="w3-border-grey">
+{% for event in events %}
+<h3>{{event.organizer}}</h3>
+<h4>{{event.event_title}}</h4>
+<h6><i>{{event.publish_date}}</i></h6>
+<i><h6>Start date:-{{event.Start_date}}</h6></i>
+
+<div class="row">
+  <div class="col-sm-4">
+  <a href="{% url 'event_app:event_details' slug=event.slug %}"> <img src="/media/{{event.event_image}}" alt="{{event.event_title}}" title="{{event.event_title}}" width="100%"></a>
+ <h6>End Time :-{{ event.End_date}}</h6>
+
+
+  </div>
+
+
+  <div class="col-sm-8">
+  <p> {{event.event_content|range_filter|linebreaks}}</p>
+  <a href="{% url 'event_app:event_details' slug=event.slug %}"> Read More</a><h6>{{event.like_event.count}}~Interested || {{event.event_comment.count}}~Comment</h6>
+  <p class="btn btn-warning "><a href="{% url 'event_app:home_donate' %}">Donation</a></p>
+  <h6>Posted By:<a href="{% url 'event_app:unlike' pk=event.pk %}">{{event.author}}</a> </h6>
+
+
+</div>
+</div>
+<hr><hr>
+{% endfor %}
+{% endblock %}
